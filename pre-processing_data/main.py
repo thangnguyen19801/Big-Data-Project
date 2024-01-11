@@ -123,8 +123,3 @@ def main():
         if df:
             transformed_df = transform_streaming_data(df)
             initiate_streaming_to_bucket(transformed_df, path, checkpoint_location)
-
-
-# Execute the main function if this script is run as the main module
-if __name__ == '__main__':
-    main()

@@ -11,6 +11,33 @@ consumer = KafkaConsumer(
         auto_offset_reset='earliest'#,'smallest'
     )
 
-for message in consumer:
-    print(message.key)
-    print(message.value)
+import boto3
+from botocore.exceptions import NoCredentialsError
+
+def upload_variable_to_s3(variable_content, bucket_name, s3_object_key):
+    # Set up AWS credentials and S3 client
+    aws_access_key_id = 'AKIA2X572HTNVBUK3FSA'
+    aws_secret_access_key = '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'
+    
+    s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+
+    try:
+        # Convert the variable content to bytes
+        variable_content_bytes = json.dumps(variable_content)
+
+        # Upload the variable content as an object to S3
+        s3.put_object(Body=variable_content_bytes, Bucket=bucket_name, Key=s3_object_key)
+        print(f"Variable uploaded successfully to '{bucket_name}/{s3_object_key}'")
+
+    except NoCredentialsError:
+        print("Credentials not available or incorrect.")
+
+# Example usage
+bucket_name = 'tiki-big-data-project'
+s3_object_key = 'uploaded-variable.txt'
+
+if __name__ == "__main__":
+    i = 1
+    for message in consumer:
+        upload_variable_to_s3(message.value, bucket_name, message.key+'_'+str(i)+'.json')
+        i += 1

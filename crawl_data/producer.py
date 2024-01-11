@@ -8,7 +8,11 @@ bootstrap_servers = ['localhost:9092']
 topic = 'tiki'
 
 info = {
-    "phone_and_tablet": "https://tiki.vn/api/personalish/v1/blocks/listings?limit=5&category=1789&urlKey=dien-thoai-may-tinh-bang"
+    "phone_and_tablet": "https://tiki.vn/api/personalish/v1/blocks/listings?limit=300&category=1789&urlKey=dien-thoai-may-tinh-bang",
+    "electric_accessory": "https://tiki.vn/api/personalish/v1/blocks/listings?limit=300&aggregations=2&category=1815&urlKey=thiet-bi-kts-phu-kien-so",
+    "camera": "https://tiki.vn/api/personalish/v1/blocks/listings?limit=300&category=1801&urlKey=may-anh",
+    "man_fashion": "https://tiki.vn/api/personalish/v1/blocks/listings?limit=300&category=915&urlKey=thoi-trang-nam",
+    "jewelry": "https://tiki.vn/api/personalish/v1/blocks/listings?limit=300&category=8371&urlKey=dong-ho-va-trang-suc"
 }
 
 def serializer(message):
