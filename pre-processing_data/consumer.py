@@ -1,6 +1,15 @@
 from kafka import KafkaConsumer
 import json
 
+import pymongo
+
+# Connect to MongoDB
+client = pymongo.MongoClient("mongodb://localhost:27017/")  # mongodb is the service name from docker-compose.yml
+db = client["E-Commerce"]  # Replace "mydatabase" with your desired database name
+
+# Example: Insert a document into a collection
+collection = db["Tiki"]
+
 # To consume latest messages and auto-commit offsets
 consumer = KafkaConsumer(
         'tiki',
@@ -39,5 +48,6 @@ s3_object_key = 'uploaded-variable.txt'
 if __name__ == "__main__":
     i = 1
     for message in consumer:
-        upload_variable_to_s3(message.value, bucket_name, message.key+'_'+str(i)+'.json')
+        message_data = message.value
+        collection.insert_one(message_data)
         i += 1

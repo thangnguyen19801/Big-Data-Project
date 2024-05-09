@@ -40,17 +40,7 @@ def crawl_product(product_list=[]):
         response = requests.get(product_url.format(product_id), headers=headers)
         if (response.status_code == 200):
             product = json.loads(response.text)
-            product_detail = {}
-            product_detail['name'] = product['name']
-            product_detail['brand'] = product['brand']['name']
-            product_detail['url'] = product['short_url']
-            product_detail['price'] = product['price']
-            product_detail['original_price'] = product['original_price']
-            product_detail['rating_average'] = product['rating_average']
-            product_detail['discount'] = product['discount']
-            product_detail['discount_rate'] = product['discount_rate']
-            product_detail['review_count'] = product['review_count']
-            product_detail_list.append(product_detail)
+            product_detail_list.append(product)
             print("Crawl product: ", product_id, ": ", response.status_code)
     return product_detail_list
 
@@ -66,6 +56,8 @@ def adjust_product(product):
             e[field] = json.dumps(e[field], ensure_ascii=False).replace('\n','')
 
     return e
+
+
 
 
 

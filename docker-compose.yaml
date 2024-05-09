@@ -84,6 +84,12 @@ services:
     networks:
       - elastic
 
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+
 networks:
   elastic:
     driver: bridge
